@@ -1,13 +1,13 @@
-import React from 'react'
-import { Button } from '../components/ui/button'
+import { SignInButton } from "@clerk/nextjs";
+import { Button } from "../components/ui/button";
 
 const page = () => {
   return (
     <div>
       <Button>Button</Button>
-
+      <SignInButton>Login</SignInButton>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
