@@ -1,5 +1,4 @@
 import { QuickActionType } from "@/constants";
-import React from "react";
 import { Card } from "../ui/card";
 
 // some tailwind bug

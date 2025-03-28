@@ -6,6 +6,7 @@ import { useQuery } from "convex/react";
 import { useState } from "react";
 import { api } from "../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
+import MeetingModal from "@/components/shared/MeetingModal";
 
 const HomePage = () => {
   const router = useRouter();
@@ -24,7 +25,7 @@ const HomePage = () => {
         setshowModal(true);
         setmodalType("join");
         break;
-      default :
+      default:
         router.push(`/${title.toLowerCase()}`);
     }
   };
@@ -55,6 +56,13 @@ const HomePage = () => {
               />
             ))}
           </div>
+
+          <MeetingModal
+            isOpen={showModal}
+            onClose={() => setshowModal(false)}
+            title={modalType === "join" ? "Join Meeting" : "Start Meeting"}
+            isJoinMeeting={modalType === "join"}
+          />
         </>
       ) : (
         <>
