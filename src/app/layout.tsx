@@ -1,7 +1,7 @@
 import ConvexClerkProvider from "@/components/providers/ConvexClerkProvider";
 import { ThemeProvider } from "@/components/providers/ThemeProviders";
 import Navbar from "@/components/shared/Navbar";
-import '@stream-io/video-react-sdk/dist/css/styles.css';
+import "@stream-io/video-react-sdk/dist/css/styles.css";
 import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -33,7 +33,9 @@ export default function RootLayout({
     <ConvexClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          data-new-gr-c-s-check-loaded="14.1098.0"
+          data-gr-ext-installed=""
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
             attribute={"class"}
