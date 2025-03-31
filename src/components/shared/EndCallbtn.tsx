@@ -38,7 +38,7 @@ function EndCallbtn() {
   return (
     <Button variant={"destructive"} onClick={endCall}>
       {" "}
-      Enc call
+      End call
     </Button>
   );
 }

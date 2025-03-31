@@ -25,6 +25,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { api } from "../../../../convex/_generated/api";
 import { TIME_SLOTS } from "@/constants";
+import MeetingCard from "@/components/shared/MeetingCard";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
@@ -305,6 +306,23 @@ function InterviewScheduleUI() {
           </DialogContent>
         </Dialog>
       </div>
+
+      {/* Meeting Cards */}
+      {!interviews ? (
+        <Loader2 className="animate-spin size-8 text-muted-foreground" />
+      ) : interviews.length > 0 ? (
+        <div className="space-y-4">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {interviews.map((interview) => (
+              <MeetingCard key={interview._id} interview={interview} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-12 text-muted-foreground">
+          No interviews scheduled
+        </div>
+      )}
     </div>
   );
 }
