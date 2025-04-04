@@ -20,6 +20,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CalendarIcon, XCircle } from "lucide-react";
 import { format } from "date-fns";
+import CommentDialog from "@/components/shared/CommentDialog";
 type Interview = Doc<"interviews">;
 function DashboardPage() {
   const users = useQuery(api.users.getUsers);
@@ -129,6 +130,7 @@ function DashboardPage() {
 
                               </div>
                             )}
+                            <CommentDialog interviewId={interview._id}/>
                           </CardFooter>
                         </Card>
                       );

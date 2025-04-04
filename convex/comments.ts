@@ -30,5 +30,7 @@ export const getComments = query({
         q.eq("interviewId", args.interviewId)
       )
       .collect();
+
+      return comments;
   },
 });

@@ -8,10 +8,12 @@ import { api } from "../../../../convex/_generated/api";
 import { useRouter } from "next/navigation";
 import MeetingModal from "@/components/shared/MeetingModal";
 import LoaderUi from "@/components/shared/LoaderUi";
+import { Loader2Icon } from "lucide-react";
+import MeetingCard from "@/components/shared/MeetingCard";
 
 const HomePage = () => {
   const router = useRouter();
-  const { isInterviewer, isCandidate, isLoadiing } = useUserRole();
+  const { isInterviewer, isLoadiing } = useUserRole();
   const interviews = useQuery(api.interviews.getMyInterviews);
   const [showModal, setshowModal] = useState<boolean>(false);
   const [modalType, setmodalType] = useState<"start" | "join">();
@@ -67,7 +69,29 @@ const HomePage = () => {
         </>
       ) : (
         <>
-          <div className="">candidate view </div>
+          <div>
+            <h1 className="text-3xl font-bold">Your Interviews</h1>
+            <p className="text-muted-foreground mt-1">
+              View and join your scheduled interviews
+            </p>
+          </div>
+          <div className="mt-8">
+            {interviews === undefined ? (
+              <div className="flex items-center justify-center">
+                <Loader2Icon className="animate-spin size-8 text-muted-foreground" />
+              </div>
+            ) : interviews.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {interviews.map((interview) => (
+                  <MeetingCard key={interview._id} interview={interview} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12 text-muted-foreground">
+                You have no interviews scheduled.
+              </div>
+            )}
+          </div>
         </>
       )}
     </div>
