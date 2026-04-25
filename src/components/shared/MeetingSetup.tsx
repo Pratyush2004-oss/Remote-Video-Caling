@@ -3,7 +3,7 @@ import {
   useCall,
   VideoPreview,
 } from "@stream-io/video-react-sdk";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "../ui/card";
 import { CameraIcon, MicIcon, SettingsIcon } from "lucide-react";
 import { Switch } from "../ui/switch";
@@ -15,6 +15,8 @@ interface MeetingSetupInterface {
 function MeetingSetup({ onSetupComplete }: MeetingSetupInterface) {
   const [isCameraDisabled, setisCameraDisabled] = useState<boolean>(true);
   const [isMicDisabled, setisMicDisabled] = useState<boolean>(false);
+  const [isJoining, setIsJoining] = useState<boolean>(false);
+  const joinAttemptedRef = useRef<boolean>(false);
 
   const call = useCall();
   if (!call) return null;
@@ -30,8 +32,19 @@ function MeetingSetup({ onSetupComplete }: MeetingSetupInterface) {
   }, [isMicDisabled, call.microphone]);
 
   const handleJoin = async () => {
-    await call.join();
-    onSetupComplete();
+    if (joinAttemptedRef.current) return;
+
+    joinAttemptedRef.current = true;
+    setIsJoining(true);
+
+    try {
+      await call.join();
+      onSetupComplete();
+    } catch (error) {
+      joinAttemptedRef.current = false;
+      setIsJoining(false);
+      console.error("Failed to join call", error);
+    }
   };
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-background/95">
@@ -123,8 +136,13 @@ function MeetingSetup({ onSetupComplete }: MeetingSetupInterface) {
 
                 {/* Join Button */}
                 <div className="space-y-3 mt-8">
-                  <Button className="w-full" size={"lg"} onClick={handleJoin}>
-                    Join Meeting
+                  <Button
+                    className="w-full"
+                    size={"lg"}
+                    onClick={handleJoin}
+                    disabled={isJoining}
+                  >
+                    {isJoining ? "Joining..." : "Join Meeting"}
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">
                     Do not worry, our team is super friendly! We want to
